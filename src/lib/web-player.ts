@@ -1,7 +1,7 @@
 import { EventListener } from "./events";
 import { Patch } from "./patches";
 import { Scheduler } from "@9h/lib";
-import { CharSeqPlayer } from "./player";
+import { Player } from "./player";
 
 type WebPlayerEvent = {
   type: "note_trigger";
@@ -18,7 +18,7 @@ export class WebPlayer extends EventListener<WebPlayerEvent> {
     super();
     this.scheduler = new Scheduler(context || new AudioContext(), patch.settings.bpm);
 
-    const player = new CharSeqPlayer(patch);
+    const player = new Player(patch);
 
     this.scheduler.addEventListener((timestamp: number) => {
       const triggers = player.tick();

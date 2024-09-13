@@ -1,13 +1,13 @@
 import { clamp } from "./math";
 import { Patch } from "./patches";
 
-type NoteEvent = {
+type TriggerEvent = {
   channel: number;
   note: number;
   velocity: number;
 };
 
-export class CharSeqPlayer {
+export class Player {
   patch: Patch;
   currentStep = 0;
   sequenceLength: number;
@@ -18,8 +18,8 @@ export class CharSeqPlayer {
     this.sequenceLength = Math.max(...patch.patterns.map((x) => x.steps.length));
   }
 
-  tick(): NoteEvent[] {
-    const events: NoteEvent[] = [];
+  tick(): TriggerEvent[] {
+    const events: TriggerEvent[] = [];
 
     const patterns = this.patch.patterns;
 
