@@ -1,5 +1,6 @@
 import { SamplePlayerDevice } from "@9h/lib";
-import { CharSeq } from "./lib/index.ts";
+import { parsePatch } from "./lib/parser.ts";
+import { WebPlayer } from "./lib/web-player.ts";
 
 const patch = `
 0:x---x---
@@ -16,10 +17,7 @@ f:0--0--0-3--3--3-a--a--a-5--5--5-
 
 `;
 
-const startButtonElement = document.querySelector("#start-button")!;
-startButtonElement.addEventListener("click", async () => {
-  const context = new AudioContext();
-
+const initDevices = async (context: AudioContext) => {
   const channels: SamplePlayerDevice[] = [];
   channels[0] = new SamplePlayerDevice(["samples/bd.wav"]);
   channels[1] = new SamplePlayerDevice(["samples/sd.wav"]);
@@ -28,12 +26,23 @@ startButtonElement.addEventListener("click", async () => {
   channels[14] = new SamplePlayerDevice(["samples/marimba.wav"]);
   channels[15] = new SamplePlayerDevice(["samples/bass.wav"]);
 
-  channels.forEach((c) => c.init(context));
+  await Promise.all(channels.map((c) => async () => await c.init(context)));
 
-  const seq = new CharSeq({ context });
+  return channels;
+};
 
-  seq.addEventListener((e) => {
-    console.log(e);
+const startButtonElement = document.querySelector("#start-button")!;
+startButtonElement.addEventListener("click", async () => {
+  const parsedPatch = parsePatch(patch);
+  if (!parsedPatch.ok) {
+    throw `error parsing patch: ${parsedPatch.error}`;
+  }
+
+  const context = new AudioContext();
+  const channels = await initDevices(context);
+  const player = new WebPlayer({ context, patch: parsedPatch.value });
+
+  player.addEventListener((e) => {
     if (e.type === "note_trigger") {
       const device = channels[e.channel];
       if (!device) return;
@@ -42,8 +51,5 @@ startButtonElement.addEventListener("click", async () => {
     }
   });
 
-  const result = await seq.playPatch(patch);
-  if (!result.ok) {
-    console.error(result.error);
-  }
+  player.start();
 });
