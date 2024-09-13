@@ -1,1 +1,1 @@
-export { CharSeq } from "./lib/index.ts";
+export { parsePatch, Player, WebPlayer } from "./lib/index.ts";
