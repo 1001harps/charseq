@@ -4,11 +4,11 @@ import { parsePatch } from "./parser";
 import { AsyncResult, Err, Ok } from "./types";
 import { EventListener } from "./events";
 
-interface BloopOptions {
+interface CharSeqOptions {
   context?: AudioContext;
 }
 
-type BloopEvent = {
+type CharSeqEvent = {
   type: "note_trigger";
   channel: number;
   note: number;
@@ -16,11 +16,11 @@ type BloopEvent = {
   timestamp: number;
 };
 
-export class Bloop extends EventListener<BloopEvent> {
+export class CharSeq extends EventListener<CharSeqEvent> {
   currentStep = 0;
   context: AudioContext;
 
-  constructor({ context }: BloopOptions) {
+  constructor({ context }: CharSeqOptions) {
     super();
 
     this.context = context || new AudioContext();

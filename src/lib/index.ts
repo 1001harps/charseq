@@ -1,1 +1,1 @@
-export { Bloop } from "./bloop";
+export { CharSeq } from "./charseq";

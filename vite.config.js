@@ -5,8 +5,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, "src/lib/index.ts"),
-      name: "bloop",
-      fileName: "bloop",
+      name: "charseq",
+      fileName: "charseq",
     },
     rollupOptions: {
       external: [],
