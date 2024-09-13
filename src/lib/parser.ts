@@ -12,7 +12,7 @@ import { Ok, Err, Result } from "./types";
 const hexDigits = "0123456789abcdef".split("");
 
 const parsePattern = (line: string): Result<Pattern, string> => {
-  const [channelText, sequenceText] = line.split(":");
+  const [channelText, sequenceText] = line.includes(":") ? line.split(":") : ["0", line];
 
   const channel = parseInt(channelText, 16);
   if (channel.toString() === "NaN") {

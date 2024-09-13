@@ -1,5 +1,6 @@
 import { parsePatch } from "./parser";
 import { Patch, channelSettings, rest, note, patchSettings } from "./patches";
+import { describe, test, expect } from "vitest";
 
 describe("parser", () => {
   describe("patterns", () => {
@@ -27,6 +28,21 @@ describe("parser", () => {
 
       const expectedPatch: Patch = {
         patterns: [],
+        settings: patchSettings(),
+      };
+
+      expect(parsedPatch.value).toMatchObject(expectedPatch);
+    });
+
+    test("parses pattern without specified channel number, defaults to 0", () => {
+      const patch = "3";
+      const parsedPatch = parsePatch(patch);
+      if (!parsedPatch.ok) {
+        throw `error parsing patch: ${parsedPatch.error}`;
+      }
+
+      const expectedPatch: Patch = {
+        patterns: [{ channel: 0, settings: channelSettings(), steps: [note(3)] }],
         settings: patchSettings(),
       };
 
