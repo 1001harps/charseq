@@ -2,6 +2,23 @@ import { exec } from "https://deno.land/x/exec/mod.ts";
 import { parsePatch } from "./pkg/parser/mod.ts";
 import { Player } from "./pkg/player/mod.ts";
 import type { Patch } from "./pkg/shared/types.ts";
+import { parseArgs } from "jsr:@std/cli/parse-args";
+
+const flags = parseArgs(Deno.args, {
+  string: ["bpm"],
+});
+
+const applyBpmArg = (patchBpm: number): number => {
+  if (!flags.bpm) return patchBpm;
+
+  const bpm = parseInt(flags.bpm);
+  if (isNaN(bpm)) {
+    console.error(`${flags.bpm} is not a valid bpm`);
+    Deno.exit(1);
+  }
+
+  return bpm;
+};
 
 const exitWithUsageError = () => {
   console.log(`usage: charseq <pattern>`);
@@ -15,7 +32,7 @@ const trig = (channel: number, note: number) => {
 const playPatch = (patch: Patch) => {
   const player = new Player(patch);
 
-  const bpm = patch.settings.bpm;
+  const bpm = applyBpmArg(patch.settings.bpm);
   const noteDivision = 4;
   const intervalMs = (60 * 1000) / bpm / noteDivision;
 

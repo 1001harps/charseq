@@ -4,7 +4,7 @@
   "exports": "./lib/mod.ts",
   "tasks": {
     "build": "deno compile --allow-run --allow-read --output=./build/cli cli.ts",
-    "install": "deno install --allow-run --allow-read cli.ts"
+    "install": "deno install -f --allow-run --allow-read cli.ts"
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1"
