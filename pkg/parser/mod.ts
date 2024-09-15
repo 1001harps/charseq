@@ -109,7 +109,7 @@ export const parsePatch = (patchText: string): Result<Patch, string> => {
   };
 
   const lines = patchText
-    .split("\n")
+    .split(/\n|\//)
     .map((x) => x.trim())
     // ignore empty string
     .filter((x) => !!x)

@@ -168,6 +168,38 @@ Deno.test("parser parses multi channel multi step patch", () => {
   expect(parsedPatch.value).toMatchObject(expectedPatch);
 });
 
+Deno.test("parser parses multi channel multi step patch with slash separator", () => {
+  const patch = `0:1-2-3 / 1:2-3-4 / 2:4-5-6`;
+
+  const parsedPatch = parsePatch(patch);
+  if (!parsedPatch.ok) {
+    throw `error parsing patch: ${parsedPatch.error}`;
+  }
+
+  const expectedPatch = {
+    patterns: [
+      {
+        channel: 0,
+        settings: channelSettings(),
+        steps: [note(1), rest(), note(2), rest(), note(3)],
+      },
+      {
+        channel: 1,
+        settings: channelSettings(),
+        steps: [note(2), rest(), note(3), rest(), note(4)],
+      },
+      {
+        channel: 2,
+        settings: channelSettings(),
+        steps: [note(4), rest(), note(5), rest(), note(6)],
+      },
+    ],
+    settings: patchSettings(),
+  };
+
+  expect(parsedPatch.value).toMatchObject(expectedPatch);
+});
+
 Deno.test("parser returns error for invalid channel", () => {
   const patch = "g:-";
   const parsedPatch = parsePatch(patch);
