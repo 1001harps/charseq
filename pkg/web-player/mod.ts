@@ -1,6 +1,6 @@
 import { EventListener } from "../shared/events.ts";
 import { Scheduler } from "jsr:@9h/lib@0.0.12";
-import { Patch } from "../shared/types.ts";
+import type { Patch } from "../shared/types.ts";
 import { Player } from "../player/mod.ts";
 
 type WebPlayerEvent = {
@@ -16,7 +16,10 @@ export class WebPlayer extends EventListener<WebPlayerEvent> {
 
   constructor({ patch, context }: { patch: Patch; context: AudioContext }) {
     super();
-    this.scheduler = new Scheduler(context || new AudioContext(), patch.settings.bpm);
+    this.scheduler = new Scheduler(
+      context || new AudioContext(),
+      patch.settings.bpm,
+    );
 
     const player = new Player(patch);
 

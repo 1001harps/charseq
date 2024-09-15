@@ -1,4 +1,4 @@
-import { Patch } from "../shared/types.ts";
+import type { Patch } from "../shared/types.ts";
 import { clamp } from "../shared/math.ts";
 
 type TriggerEvent = {
@@ -16,7 +16,7 @@ export class Player {
     this.patch = patch;
     // use length of longest pattern
     this.sequenceLength = Math.max(
-      ...patch.patterns.map((x) => x.steps.length)
+      ...patch.patterns.map((x) => x.steps.length),
     );
   }
 
@@ -25,7 +25,7 @@ export class Player {
 
     const patterns = this.patch.patterns;
 
-    for (let p of patterns) {
+    for (const p of patterns) {
       const i = this.currentStep % p.steps.length;
 
       const step = p.steps[i];

@@ -1,7 +1,7 @@
 import { exec } from "https://deno.land/x/exec/mod.ts";
 import { parsePatch } from "./pkg/parser/mod.ts";
 import { Player } from "./pkg/player/mod.ts";
-import { Patch } from "./pkg/shared/types.ts";
+import type { Patch } from "./pkg/shared/types.ts";
 
 const trig = (channel: number, note: number) => {
   exec(`mtrig ${channel} ${note}`);

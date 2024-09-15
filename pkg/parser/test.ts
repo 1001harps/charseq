@@ -1,5 +1,5 @@
 import { parsePatch } from "./mod.ts";
-import { channelSettings, rest, note, patchSettings } from "../shared/types.ts";
+import { channelSettings, note, patchSettings, rest } from "../shared/types.ts";
 import { expect } from "jsr:@std/expect";
 
 Deno.test("parser parses empty patch", () => {
@@ -47,7 +47,7 @@ Deno.test(
     };
 
     expect(parsedPatch.value).toMatchObject(expectedPatch);
-  }
+  },
 );
 
 Deno.test("parser parses rest step", () => {

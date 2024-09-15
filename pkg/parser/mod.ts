@@ -1,15 +1,12 @@
-import {
+import type {
+  ChannelSettings,
+  Patch,
+  PatchSettings,
   Pattern,
   PatternStep,
-  channelSettings,
-  Patch,
-  ChannelSettings,
-  patchSettings,
-  PatchSettings,
-  Ok,
-  Err,
   Result,
 } from "../shared/types.ts";
+import { channelSettings, Err, Ok, patchSettings } from "../shared/types.ts";
 
 const hexDigits = "0123456789abcdef".split("");
 
@@ -21,7 +18,7 @@ const parsePattern = (line: string): Result<Pattern, string> => {
   const channel = parseInt(channelText, 16);
   if (channel.toString() === "NaN") {
     return Err(
-      `parsePattern: '${channelText}' is not a valid channel, at ${line}`
+      `parsePattern: '${channelText}' is not a valid channel, at ${line}`,
     );
   }
 
@@ -54,7 +51,7 @@ const parsePatchSettings = (line: string): Result<PatchSettings, string> => {
     const bpm = parseInt(bpmText, 16);
     if (bpm.toString() === "NaN") {
       return Err(
-        `parseChannelSettings: '${bpmText}' is not a valid setting, at ${line}, position 0`
+        `parseChannelSettings: '${bpmText}' is not a valid setting, at ${line}, position 0`,
       );
     }
 
@@ -66,7 +63,7 @@ const parsePatchSettings = (line: string): Result<PatchSettings, string> => {
 
 // TODO: rework as midi CCs
 const parseChannelSettings = (
-  line: string
+  line: string,
 ): Result<[number, ChannelSettings], string> => {
   const [channelText, settingsText] = line.split(":");
 
@@ -75,7 +72,7 @@ const parseChannelSettings = (
   const channel = parseInt(channelText[1], 16);
   if (channel.toString() === "NaN") {
     return Err(
-      `parseChannelSettings: '${channelText}' is not a valid channel, at ${line}`
+      `parseChannelSettings: '${channelText}' is not a valid channel, at ${line}`,
     );
   }
 
@@ -84,7 +81,7 @@ const parseChannelSettings = (
     const octave = parseInt(settingsText[0], 16);
     if (octave.toString() === "NaN") {
       return Err(
-        `parseChannelSettings: '${octaveText}' is not a valid setting, at ${line}, position 0`
+        `parseChannelSettings: '${octaveText}' is not a valid setting, at ${line}, position 0`,
       );
     }
 
@@ -95,7 +92,7 @@ const parseChannelSettings = (
     const volume = parseInt(settingsText[1], 16);
     if (volume.toString() === "NaN") {
       return Err(
-        `parseChannelSettings: '${volumeText}' is not a valid setting, at ${line}, position 1`
+        `parseChannelSettings: '${volumeText}' is not a valid setting, at ${line}, position 1`,
       );
     }
 

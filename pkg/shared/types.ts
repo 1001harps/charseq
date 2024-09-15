@@ -4,12 +4,12 @@ export const DEFAULT_BPM = 120;
 
 export type PatternStep =
   | {
-      type: "NOTE";
-      note: number;
-    }
+    type: "NOTE";
+    note: number;
+  }
   | {
-      type: "REST";
-    };
+    type: "REST";
+  };
 
 export const note = (note: number): PatternStep => ({ type: "NOTE", note });
 export const rest = (): PatternStep => ({ type: "REST" });
@@ -21,7 +21,7 @@ export interface ChannelSettings {
 
 export const channelSettings = (
   octave: number = DEFAULT_OCTAVE,
-  volume: number = DEFAULT_VOLUME
+  volume: number = DEFAULT_VOLUME,
 ): ChannelSettings => ({ octave, volume });
 
 export interface PatchSettings {
@@ -45,13 +45,13 @@ export interface Patch {
 
 export type Result<T, E = undefined> =
   | {
-      ok: true;
-      value: T;
-    }
+    ok: true;
+    value: T;
+  }
   | {
-      ok: false;
-      error: E;
-    };
+    ok: false;
+    error: E;
+  };
 
 export type AsyncResult<T, E = undefined> = Promise<Result<T, E>>;
 
