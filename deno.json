@@ -1,4 +1,7 @@
 {
+  "name": "@9h/charseq",
+  "version": "0.4.3",
+  "exports": "./lib/mod.ts",
   "tasks": {
     "build": "deno compile --allow-run --allow-read --output=./build/cli cli.ts",
     "install": "deno install --allow-run --allow-read cli.ts"
