@@ -1,8 +1,8 @@
-import { exec } from "https://deno.land/x/exec/mod.ts";
 import { parsePatch } from "./pkg/parser/mod.ts";
 import { Player } from "./pkg/player/mod.ts";
 import type { Patch } from "./pkg/shared/types.ts";
 import { parseArgs } from "jsr:@std/cli/parse-args";
+import { Midi } from "./bindings/midi/mod.ts";
 
 const flags = parseArgs(Deno.args, {
   string: ["bpm"],
@@ -25,10 +25,9 @@ const exitWithUsageError = () => {
   Deno.exit(1);
 };
 
-const trig = (channel: number, note: number) => {
-  exec(`mnote on ${channel} ${note}`);
-
-  setTimeout(() => exec(`mnote off ${channel} ${note}`), 40);
+const trig = (midi: Midi, channel: number, note: number) => {
+  midi.note_on(channel, note);
+  setTimeout(() => midi.note_off(channel, note), 40);
 };
 
 const playPatch = (patch: Patch) => {
@@ -38,11 +37,13 @@ const playPatch = (patch: Patch) => {
   const noteDivision = 4;
   const intervalMs = (60 * 1000) / bpm / noteDivision;
 
+  const midi = new Midi();
+
   setInterval(() => {
     const events = player.tick();
 
     events.forEach((e) => {
-      trig(e.channel + 1, e.note);
+      trig(midi, e.channel, e.note);
     });
   }, intervalMs);
 };
@@ -77,7 +78,6 @@ if (arg0 === "parse") {
 } else if (arg0 === "play") {
   if (!arg1) exitWithUsageError();
 
-  exitWithUsageError();
   const patch = await parseFile(arg1);
   playPatch(patch);
 } else {

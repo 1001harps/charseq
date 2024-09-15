@@ -1,0 +1,1 @@
+{"name":"midi","littleEndian":true,"symbols":{"add":{"parameters":["u32","u32"],"result":"u32","nonBlocking":false}},"typeDefs":{},"tsTypes":{}}
