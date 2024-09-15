@@ -26,7 +26,9 @@ const exitWithUsageError = () => {
 };
 
 const trig = (channel: number, note: number) => {
-  exec(`mtrig ${channel} ${note}`);
+  exec(`mnote on ${channel} ${note}`);
+
+  setTimeout(() => exec(`mnote off ${channel} ${note}`), 40);
 };
 
 const playPatch = (patch: Patch) => {
