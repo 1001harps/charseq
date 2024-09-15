@@ -1,6 +1,0 @@
-{
-  "name": "@9h/charseq",
-  "version": "0.4.2",
-  "exports": "./src/main.ts",
-  "exclude": ["./public"]
-}

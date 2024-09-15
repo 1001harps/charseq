@@ -6,17 +6,23 @@ import {
   ChannelSettings,
   patchSettings,
   PatchSettings,
-} from "./patches";
-import { Ok, Err, Result } from "./types";
+  Ok,
+  Err,
+  Result,
+} from "../shared/types.ts";
 
 const hexDigits = "0123456789abcdef".split("");
 
 const parsePattern = (line: string): Result<Pattern, string> => {
-  const [channelText, sequenceText] = line.includes(":") ? line.split(":") : ["0", line];
+  const [channelText, sequenceText] = line.includes(":")
+    ? line.split(":")
+    : ["0", line];
 
   const channel = parseInt(channelText, 16);
   if (channel.toString() === "NaN") {
-    return Err(`parsePattern: '${channelText}' is not a valid channel, at ${line}`);
+    return Err(
+      `parsePattern: '${channelText}' is not a valid channel, at ${line}`
+    );
   }
 
   const steps = sequenceText.split("").map<PatternStep>((x) => {
@@ -58,14 +64,19 @@ const parsePatchSettings = (line: string): Result<PatchSettings, string> => {
   return Ok(settings);
 };
 
-const parseChannelSettings = (line: string): Result<[number, ChannelSettings], string> => {
+// TODO: rework as midi CCs
+const parseChannelSettings = (
+  line: string
+): Result<[number, ChannelSettings], string> => {
   const [channelText, settingsText] = line.split(":");
 
   const s = channelSettings();
 
   const channel = parseInt(channelText[1], 16);
   if (channel.toString() === "NaN") {
-    return Err(`parseChannelSettings: '${channelText}' is not a valid channel, at ${line}`);
+    return Err(
+      `parseChannelSettings: '${channelText}' is not a valid channel, at ${line}`
+    );
   }
 
   const octaveText = settingsText[0];

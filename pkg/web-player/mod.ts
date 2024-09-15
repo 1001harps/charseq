@@ -1,7 +1,7 @@
-import { EventListener } from "./events";
-import { Patch } from "./patches";
-import { Scheduler } from "@9h/lib";
-import { Player } from "./player";
+import { EventListener } from "../shared/events.ts";
+import { Scheduler } from "jsr:@9h/lib";
+import { Patch } from "../shared/types.ts";
+import { Player } from "../player/mod.ts";
 
 type WebPlayerEvent = {
   type: "note_trigger";
@@ -16,7 +16,10 @@ export class WebPlayer extends EventListener<WebPlayerEvent> {
 
   constructor({ patch, context }: { patch: Patch; context: AudioContext }) {
     super();
-    this.scheduler = new Scheduler(context || new AudioContext(), patch.settings.bpm);
+    this.scheduler = new Scheduler(
+      context || new AudioContext(),
+      patch.settings.bpm
+    );
 
     const player = new Player(patch);
 

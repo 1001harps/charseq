@@ -1,5 +1,5 @@
-import { clamp } from "./math";
-import { Patch } from "./patches";
+import { Patch } from "../shared/types.ts";
+import { clamp } from "../shared/math.ts";
 
 type TriggerEvent = {
   channel: number;
@@ -15,7 +15,9 @@ export class Player {
   constructor(patch: Patch) {
     this.patch = patch;
     // use length of longest pattern
-    this.sequenceLength = Math.max(...patch.patterns.map((x) => x.steps.length));
+    this.sequenceLength = Math.max(
+      ...patch.patterns.map((x) => x.steps.length)
+    );
   }
 
   tick(): TriggerEvent[] {
