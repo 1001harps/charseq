@@ -1,6 +1,6 @@
 import { parsePatch } from "./mod.ts";
 import { channelSettings, note, patchSettings, rest } from "../shared/types.ts";
-import { expect } from "jsr:@std/expect";
+import { expect } from "@std/expect";
 
 Deno.test("parser parses empty patch", () => {
   const patch = "";

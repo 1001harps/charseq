@@ -1,7 +1,7 @@
 import { parsePatch } from "./pkg/parser/mod.ts";
 import { Player } from "./pkg/player/mod.ts";
 import type { Patch } from "./pkg/shared/types.ts";
-import { parseArgs } from "jsr:@std/cli/parse-args";
+import { parseArgs } from "@std/cli/parse-args";
 import { Midi } from "./bindings/midi/mod.ts";
 
 const flags = parseArgs(Deno.args, {

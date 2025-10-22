@@ -109,12 +109,19 @@ export const parsePatch = (patchText: string): Result<Patch, string> => {
   };
 
   const lines = patchText
-    .split(/\n|\//)
-    .map((x) => x.trim())
-    // ignore empty string
-    .filter((x) => !!x)
-    // ignore commented out lines
-    .filter((x) => !x.startsWith("//"));
+    .split("\n")
+    .flatMap((rawLine) => {
+      const trimmedLine = rawLine.trim();
+
+      if (!trimmedLine || trimmedLine.startsWith("//")) {
+        return [];
+      }
+
+      return trimmedLine
+        .split("/")
+        .map((segment) => segment.trim())
+        .filter((segment) => !!segment);
+    });
 
   const parsedSettings: [number, ChannelSettings][] = [];
 

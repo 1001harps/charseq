@@ -3,11 +3,14 @@
   "version": "0.4.3",
   "exports": "./lib/mod.ts",
   "tasks": {
-    "build": "deno compile --allow-run --allow-read --output=./build/cli cli.ts",
-    "install": "deno install -f --allow-run --allow-read cli.ts"
+    "build": "deno compile -A --output=./build/cli cli.ts",
+    "install": "deno install --global -f --allow-run --allow-read --allow-ffi=./bindings/midi/target/release/libmidi.dylib --name=charseq cli.ts"
   },
   "imports": {
-    "@std/assert": "jsr:@std/assert@1"
+    "@9h/lib": "jsr:@9h/lib@^0.0.14",
+    "@std/assert": "jsr:@std/assert@^1.0.15",
+    "@std/cli": "jsr:@std/cli@^1.0.23",
+    "@std/expect": "jsr:@std/expect@^1.0.17"
   },
   "compilerOptions": {
     "lib": ["deno.window", "dom"]

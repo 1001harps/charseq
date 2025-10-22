@@ -1,5 +1,4 @@
-import { EventListener } from "../shared/events.ts";
-import { Scheduler } from "jsr:@9h/lib@0.0.12";
+import { EventListener, Scheduler } from "@9h/lib";
 import type { Patch } from "../shared/types.ts";
 import { Player } from "../player/mod.ts";
 
